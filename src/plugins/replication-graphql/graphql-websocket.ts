@@ -24,12 +24,18 @@ export function getGraphQLWebSocket(
         GRAPHQL_WEBSOCKET_BY_URL,
         url,
         () => {
+            const connectionParams = options.connectionParams;
+            const connectionParamsHeaders = headers
+                ? {
+                    headers,
+                  }
+                : undefined;
             const wsClient = createClient({
                 ...options,
                 url,
                 shouldRetry: () => true,
                 webSocketImpl: IsomorphicWebSocket,
-                connectionParams: headers ? { headers } : undefined,
+                connectionParams: connectionParams || connectionParamsHeaders,
             });
             return {
                 url,
