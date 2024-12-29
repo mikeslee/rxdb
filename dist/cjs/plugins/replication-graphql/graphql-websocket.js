@@ -16,14 +16,16 @@ var {
 var GRAPHQL_WEBSOCKET_BY_URL = exports.GRAPHQL_WEBSOCKET_BY_URL = new Map();
 function getGraphQLWebSocket(url, headers, options = {}) {
   var has = (0, _index.getFromMapOrCreate)(GRAPHQL_WEBSOCKET_BY_URL, url, () => {
+    var connectionParams = options.connectionParams;
+    var connectionParamsHeaders = headers ? {
+      headers
+    } : undefined;
     var wsClient = (0, _graphqlWs.createClient)({
       ...options,
       url,
       shouldRetry: () => true,
       webSocketImpl: IsomorphicWebSocket,
-      connectionParams: headers ? {
-        headers
-      } : undefined
+      connectionParams: connectionParams || connectionParamsHeaders
     });
     return {
       url,
