@@ -24,12 +24,14 @@ export function getGraphQLWebSocket(
         GRAPHQL_WEBSOCKET_BY_URL,
         url,
         () => {
+            console.log('getGraphQLWebSocket() - creating new websocket');
             const connectionParams = options.connectionParams;
             const connectionParamsHeaders = headers
                 ? {
                     headers,
                   }
                 : undefined;
+            console.log('connectionParams', connectionParams || connectionParamsHeaders);
             const wsClient = createClient({
                 ...options,
                 url,
